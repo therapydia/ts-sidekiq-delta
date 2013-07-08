@@ -2,12 +2,12 @@ require 'thinking_sphinx/deltas/sidekiq_delta'
 
 namespace :thinking_sphinx do
   desc 'Lock all delta indices (Resque will not run indexer or place new jobs on the :ts_delta queue).'
-  task :lock_deltas do
+  task :lock_deltas => :environment do
     ThinkingSphinx::Deltas::SidekiqDelta::CoreIndex.new.lock_deltas
   end
 
   desc 'Unlock all delta indices.'
-  task :unlock_deltas do
+  task :unlock_deltas => :environment do
     ThinkingSphinx::Deltas::SidekiqDelta::CoreIndex.new.unlock_deltas
   end
 
